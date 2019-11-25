@@ -20,7 +20,7 @@ app.post("/login_form", function (request, response) {
     login_form(request.body, response);
 });
 app.post("/process_form", function (request, response) {
-    process_quantity_form(request.body, response);
+    process_quantity_form(request.body, response); // Here is where you pass request.body which will be saves in POST inside the function
 });
 
 // Function used to check for valid quantities
@@ -49,13 +49,13 @@ function login_form(POST, response) {
 }
 
 // Function to redirect to invoice page if true
-function process_quantity_form(POST, response) {
+function process_quantity_form(POST, response) { // this function looks like a login process, not quality form process
     if (typeof POST['login_submit_button'] != 'undefined') {
         // Checks if username already exists
         var qString = queryString.stringify(POST);
-        the_username = request.body.username;
+        the_username = POST.username; // request.body is now passed in the fubction call as POST,
         if (typeof reg_user_data[the_username] != 'undefined') {
-            if (reg_user_data[the_username].password == request.body.password) {
+            if (reg_user_data[the_username].password == POST.password) { // same issue, POST is request.body
                 response.redirect('invoice_display.html?' + qString); // REDIRECT to Invoice page
             } else {
                 response.redirect('login_display.html'); //REDIRECT to Login page
