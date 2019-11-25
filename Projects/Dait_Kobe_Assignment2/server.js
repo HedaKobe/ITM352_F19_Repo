@@ -6,7 +6,7 @@ var fs = require('fs');
 var data = require('./public/products.js');
 var products = data.products;
 var queryString = require("querystring");
-var user_data = './public/user_data.json';
+var user_data = 'user_data.json';
 
 var app = express(); //declaring express() as app
 app.all('*', function (request, response, next) {
@@ -16,11 +16,11 @@ app.all('*', function (request, response, next) {
 
 app.use(myParser.urlencoded({ extended: true })); //Server-side processing
 app.use(express.static('./public'));
-app.post("/login_form", function (request, response) {
-    login_form(request.body, response);
-});
 app.post("/process_form", function (request, response) {
-    process_quantity_form(request.body, response); // Here is where you pass request.body which will be saves in POST inside the function
+    process_quantity_form(request.body, response);
+});
+app.post("/login_form", function (request, response) {
+    login_form(request.body, response); // Here is where you pass request.body which will be saves in POST inside the function
 });
 
 // Function used to check for valid quantities
@@ -32,8 +32,9 @@ function isNonNegInt(q, returnErrors = false) {
     return returnErrors ? errors : (errors.length == 0);
 }
 
+// Taken from Lab 14
 // Function to redirect to login page if true
-function login_form(POST, response) {
+function process_quantity_form(POST, response) {
     if (typeof POST['purchase_submit_button'] != 'undefined') {
         // Check if the quantities are valid, if so, send to the login, if not, give an error
         var qString = queryString.stringify(POST);
@@ -48,17 +49,36 @@ function login_form(POST, response) {
     }
 }
 
+// Taken from Lab 14
+// Checks if JSON string already exists
+if (fs.existsSync(user_data)) {
+    data = fs.readFileSync(user_data, 'utf-8');
+
+    stats = fs.statSync(user_data)
+    console.log(filename + ' has ' + stats.size + ' characters');
+
+    reg_user_data = JSON.parse(data); // Takes a string and converts it into object or array
+
+    fs.writeFileSync(user_data, JSON.stringify(reg_user_data));
+
+    console.log(reg_user_data);
+} else {
+    console.log(user_data + ' does not exist!');
+}
+
 // Function to redirect to invoice page if true
-function process_quantity_form(POST, response) { // this function looks like a login process, not quality form process
+function login_form(POST, response) {
     if (typeof POST['login_submit_button'] != 'undefined') {
         // Checks if username already exists
-        var qString = queryString.stringify(POST);
-        the_username = POST.username; // request.body is now passed in the fubction call as POST,
+        reg_user_data = JSON.parse(data); // Takes a string and converts it into object or array
+        qString = queryString.stringify(POST);
+
+        the_username = POST.username; // request.body is now passed in the function call as POST
         if (typeof reg_user_data[the_username] != 'undefined') {
-            if (reg_user_data[the_username].password == POST.password) { // same issue, POST is request.body
-                response.redirect('invoice_display.html?' + qString); // REDIRECT to Invoice page
+            if (reg_user_data[the_username].password == POST.password) {
+                response.redirect('invoice_display.html?' + qString); // Redirects to Invoice page
             } else {
-                response.redirect('login_display.html'); //REDIRECT to Login page
+                response.redirect('login_display.html'); // Redirects to Login page
             }
         }
     }

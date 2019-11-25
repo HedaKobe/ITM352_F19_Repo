@@ -1,22 +1,5 @@
 <script src="user_data.json" type="text/javascript"></script>
 
-<script>
-  //Taken from Lab 14
-  // Checks if JSON string already exists
-  var user_data = 'user_data.json';
-  if (fs.existsSync(user_data)) {
-    data = fs.readFileSync(user_data, 'utf-8');
-    stats = fs.statSync(user_data)
-
-    reg_user_data = JSON.parse(data); // Takes a string and converts it into object or array
-
-    fs.writeFileSync(user_data, JSON.stringify(reg_user_data));
-
-    console.log(reg_user_data);
-  } else {
-    console.log(user_data + ' does not exist!');
-  }
-</script>
 <!-- All HTML below is taken from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
 
 <!DOCTYPE html>
@@ -30,7 +13,7 @@
 </head>
 
 <body>
-  <form action="/process_form" class="login-form" method="POST">
+  <form action="/login_form" class="login-form" method="POST">
     <h1>Login</h1>
     <div class="txtb">
       <input type="text" name="username">
