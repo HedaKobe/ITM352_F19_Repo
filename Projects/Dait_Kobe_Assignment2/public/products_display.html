@@ -2,7 +2,7 @@
 <script>
   // Everything in script taken from Lab 13
   function checkQuantityTextbox() {
-    errors_array = isNonNegInt(quantity_textbox.value, true);
+    errors_array = isNonNegInt(qty_textbox_message.value, true);
     qty_textbox_message.innerHTML = errors_array.join(' ');
   }
   function isNonNegInt(q, returnErrors = false) {

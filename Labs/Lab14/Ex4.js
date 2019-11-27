@@ -1,10 +1,11 @@
+var fs = require('fs');
 var express = require('express');
 var app = express();
 var myParser = require("body-parser");
-var fs = require('fs');
-var filename = 'user_data.json';
+var qs = require('querystring');
 
 app.use(myParser.urlencoded({ extended: true }));
+var filename = 'user_data.json';
 
 if (fs.existsSync(filename)) {
     data = fs.readFileSync(filename, 'utf-8');
@@ -26,6 +27,19 @@ if (fs.existsSync(filename)) {
     console.log(filename + ' does not exist!');
 }
 
+var user_product_quantities = {};
+app.get("/purchase", function (request, response) {
+    // quantity data in query string
+    user_product_quantities = request.query
+    console.log(user_product_quantities);
+    // do the validation
+
+    // if not valid, go back to products display
+
+    // else go to login
+    response.redirect('login');
+});
+
 // CHANGE to Login HTML
 app.get("/login", function (request, response) {
     // Give a simple login form
@@ -44,12 +58,14 @@ app.get("/login", function (request, response) {
 // CHANGE to Login HTML
 app.post("/login", function (request, response) {
     // Process login form POST and redirect to logged in page if ok, back to login page if not
-    console.log(request.body);
+    console.log(request.body, JSON.stringify(user_product_quantities));
     // Checks if username exists already USE FOR LOGIN CHECK
     the_username = request.body.username;
     if (typeof users_reg_data[the_username] != 'undefined') {
         if (users_reg_data[the_username].password == request.body.password) {
-            response.send(the_username + ' logged in!'); // REDIRECT to Invoice HTML
+            // make the query string of product quantity needed for invoice
+            theQuantityQueryString = qs.stringify(user_product_quantities);
+            response.redirect('/invoice.html?' + theQuantityQueryString); // REDIRECT to Invoice HTML
         } else {
             response.redirect('/login'); //REDIRECT to Login HTML
         }
@@ -86,8 +102,9 @@ app.post("/register", function (request, response) {
     users_reg_data[username].email = request.body.email;
 
     fs.writeFileSync(filename, JSON.stringify(users_reg_data));
-    
+
     response.send(`${username} registered!`);
 });
 
+app.use(express.static('.'));
 app.listen(8080, () => console.log(`listening on port 8080`));

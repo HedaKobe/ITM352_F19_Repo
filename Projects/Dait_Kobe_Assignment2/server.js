@@ -8,14 +8,14 @@ var products = data.products;
 var queryString = require("querystring");
 var user_data = 'user_data.json';
 
-var app = express(); //declaring express() as app
+var app = express();
 app.all('*', function (request, response, next) {
     console.log(request.method + ' to ' + request.path);
     next();
 });
 
 app.use(myParser.urlencoded({ extended: true })); //Server-side processing
-app.use(express.static('./public'));
+
 app.post("/process_form", function (request, response) {
     process_quantity_form(request.body, response);
 });
@@ -45,19 +45,19 @@ function process_quantity_form(POST, response) {
             } else {
                 response.redirect('products_display.html?' + qString); // Redirects back to products page if it fails
             }
-        }
+        } 
     }
 }
 
 // Taken from Lab 14
 // Checks if JSON string already exists
 if (fs.existsSync(user_data)) {
-    data = fs.readFileSync(user_data, 'utf-8');
+    userid = fs.readFileSync(user_data, 'utf-8');
 
     stats = fs.statSync(user_data)
-    console.log(filename + ' has ' + stats.size + ' characters');
+    console.log(user_data + ' has ' + stats.size + ' characters');
 
-    reg_user_data = JSON.parse(data); // Takes a string and converts it into object or array
+    reg_user_data = JSON.parse(userid); // Takes a string and converts it into object or array
 
     fs.writeFileSync(user_data, JSON.stringify(reg_user_data));
 
@@ -70,7 +70,7 @@ if (fs.existsSync(user_data)) {
 function login_form(POST, response) {
     if (typeof POST['login_submit_button'] != 'undefined') {
         // Checks if username already exists
-        reg_user_data = JSON.parse(data); // Takes a string and converts it into object or array
+        reg_user_data = JSON.parse(userid); // Takes a string and converts it into object or array
         qString = queryString.stringify(POST);
 
         the_username = POST.username; // request.body is now passed in the function call as POST
@@ -78,11 +78,11 @@ function login_form(POST, response) {
             if (reg_user_data[the_username].password == POST.password) {
                 response.redirect('invoice_display.html?' + qString); // Redirects to Invoice page
             } else {
-                response.redirect('login_display.html'); // Redirects to Login page
+                response.redirect('login_display.html?'); // Redirects to Login page
             }
         }
     }
 }
 
-
+app.use(express.static('./public'));
 app.listen(8080, () => console.log(`listening on port 8080`));
