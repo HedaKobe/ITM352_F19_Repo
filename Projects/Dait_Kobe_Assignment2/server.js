@@ -25,11 +25,14 @@ app.post("/login_form", function (request, response) {
 
 // Function used to check for valid quantities
 function isNonNegInt(q, returnErrors = false) {
-    errors = []; // assume no errors at first
-    if (Number(q) != q) errors.push('Not a number!'); // Check if string is a number value
-    if (q < 0) errors.push('Negative value!'); // Check if it is non-negative
-    if (parseInt(q) != q) errors.push('Not an integer!'); // Check that it is an integer
-    return returnErrors ? errors : (errors.length == 0);
+    error = ''; // assume no errors at first
+    if (q == "") {
+        q = 0;
+    }
+    if (Number(q) != q) error = 'Not a number!'; // Check if string is a number value
+    if (q < 0) error = 'Negative value!'; // Check if it is non-negative
+    if (parseInt(q) != q) error = 'Not an integer!'; // Check that it is an integer
+    return returnErrors ? error : (error.length == 0);
 }
 
 // Taken from Lab 14
@@ -38,14 +41,26 @@ function process_quantity_form(POST, response) {
     if (typeof POST['purchase_submit_button'] != 'undefined') {
         // Check if the quantities are valid, if so, send to the login, if not, give an error
         var qString = queryString.stringify(POST);
+        var errors = {};
         for (i in products) {
             let q = POST[`quantity${i}`];
             if (isNonNegInt(q) == true) {
-                response.redirect('login_display.html?' + qString); // Redirects to Login page if it passes through function
-            } else {
-                response.redirect('products_display.html?' + qString); // Redirects back to products page if it fails
+                errors[`quantityError${i}`] = isNonNegInt(q, true);
+                console.log(isNonNegInt(q, true));
+
             }
-        } 
+        }
+        console.log(errors.keys);
+        if (typeof errors == 'undefined') {
+            response.redirect('login_display.html?' + qString); // Redirects to Login page if it passes through function
+        } else {
+            qString = qString + "&" + queryString.stringify(errors);
+            response.redirect('products_display.html?' + qString); // Redirects back to products page if it fails
+        }
+
+
+
+
     }
 }
 
@@ -71,14 +86,15 @@ function login_form(POST, response) {
     if (typeof POST['login_submit_button'] != 'undefined') {
         // Checks if username already exists
         reg_user_data = JSON.parse(userid); // Takes a string and converts it into object or array
-        qString = queryString.stringify(POST);
+
 
         the_username = POST.username; // request.body is now passed in the function call as POST
         if (typeof reg_user_data[the_username] != 'undefined') {
             if (reg_user_data[the_username].password == POST.password) {
+                qString = queryString.stringify(POST);
                 response.redirect('invoice_display.html?' + qString); // Redirects to Invoice page
             } else {
-                response.redirect('login_display.html?'); // Redirects to Login page
+                response.redirect('login_display.html?' + qString); // Redirects to Login page
             }
         }
     }
