@@ -1,0 +1,61 @@
+<script src="user_data.json" type="text/javascript"></script>
+
+<!-- All HTML below is taken from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="login_design.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <form action="/register_form" class="register-form" method="POST">
+    <h1>Sign Up</h1>
+    <div class="txtb">
+      <input type="text" name="fname">
+      <span data-placeholder="First Name"></span>
+    </div>
+
+    <div class="txtb">
+      <input type="text" name="lname">
+      <span data-placeholder="Last Name"></span>
+    </div>
+
+    <div class="txtb">
+      <input type="text" name="username">
+      <span data-placeholder="Username"></span>
+    </div>
+
+    <div class="txtb">
+      <input type="text" name="email">
+      <span data-placeholder="Email"></span>
+    </div>
+    
+    <div class="txtb">
+      <input type="password" name="password">
+      <span data-placeholder="Password"></span>
+    </div>
+
+    <input name="login_submit_button" type="submit" class="logbtn" value="Register">
+  </form>
+
+  <script type="text/javascript">
+    // Creates the animaitons on Login form
+    $(".txtb input").on("focus", function () {
+      $(this).addClass("focus");
+    });
+
+    $(".txtb input").on("blur", function () {
+      if ($(this).val() == "")
+        $(this).removeClass("focus");
+    });
+  </script>
+
+
+</body>
+
+</html>
