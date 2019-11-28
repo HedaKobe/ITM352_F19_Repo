@@ -26,7 +26,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Products Page</title>
-  <link rel="stylesheet" href="exoticStore.css">
+  <link rel="stylesheet" href="store_design.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
 </head>
 
@@ -53,8 +53,8 @@
               <section class="item">
               <h2>${products[i]["exotic"]}</h2>
               <p>\$${products[i]["price"]}</p>
-              <label id="quantity"}">Quantity</label>
-              <input id="qty_textbox_message" type="text" placeholder="Enter a quantity" name="quantity${i}" onkeyup="checkQuantityTextbox(this);"> 
+              <input id="qty_textbox_message" type="text" placeholder="Enter a quantity" name="quantity${i}" onkeyup="checkQuantityTextbox(this);">
+              <label id="quantity">Quantity</label>
               <img class="img" src="${products[i]["image"]}">
               </section>
             `);
