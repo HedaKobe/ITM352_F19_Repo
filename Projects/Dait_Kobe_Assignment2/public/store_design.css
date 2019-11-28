@@ -64,13 +64,13 @@ header .title:hover {
     border-radius: 10px;
 }
 
-th {
+.index-table th {
     font-weight: bolder;
 }
 
 /* Alternates color for table rows */
 
-tr:nth-child(even) {
+.index-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
@@ -145,7 +145,7 @@ input[type=submit]:hover {
 
 /* Invoice styling */
 
-#invoice {
+.invoice-box {
     width: 800px;
     background: #f1f1f1;
     height: 500px;
@@ -155,4 +155,5 @@ input[type=submit]:hover {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border: 1px solid white;
 }
