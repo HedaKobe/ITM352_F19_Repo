@@ -13,32 +13,43 @@
 </head>
 
 <body>
-  <form action="/register_form" class="register-form" method="POST">
+  <form action="/register_form" class="register-form" method="POST" onsubmit="return regErrors()">
     <h1>Sign Up</h1>
     <div class="txtb">
       <input type="text" name="fname">
       <span data-placeholder="First Name"></span>
+      <div id="fname_error"></div>
     </div>
 
     <div class="txtb">
       <input type="text" name="lname">
       <span data-placeholder="Last Name"></span>
+      <div id="lname_error"></div>
     </div>
 
     <div class="txtb">
       <input type="text" name="username">
       <span data-placeholder="Username"></span>
+      <div id="username_error"></div>
     </div>
 
     <div class="txtb">
       <input type="text" name="email">
       <span data-placeholder="Email"></span>
+      <div id="email_error"></div>
     </div>
     
     <div class="txtb">
       <input type="password" name="password">
       <span data-placeholder="Password"></span>
+      <div id="password_error"></div>
     </div>
+
+    <div class="txtb">
+        <input type="password" name="repeat_password">
+        <span data-placeholder="RepeatPassword"></span>
+        <div id="repeat_password_error"></div>
+      </div>
 
     <input name="login_submit_button" type="submit" class="logbtn" value="Register">
   </form>

@@ -47,14 +47,16 @@
           for (var i = 0; i < products.length; i++) {
             var extended_prices = products[i]["price"] * quantity[i];
             var subtotal = extended_prices + subtotal;
-            document.write(`
+            if (quantity[i] > 0) {
+              document.write(`
                 <tr>
                     <td width="43%">${products[i]["exotic"]}</td>
                     <td align="center" width="11%">${quantity[i]}</td>
-                    <td align="right" width="13%">\$${products[i]["price"]}</td>
+                    <td align="right" width="13%">\$${products[i]["price"].toFixed(2)}</td>
                     <td align="right" width="54%">\$${extended_prices.toFixed(2)}</td>
                 </tr>
                 `);
+            }
           }
         </script>
         <tr>
@@ -72,7 +74,7 @@
           // Subtotal
           document.write(`
                 <tr>
-                    <td style="text-align: center;" colspan="3" width="67%">Sub-total</td>
+                    <td style="text-align: right;" colspan="3" width="67%">Sub-total</td>
                     <td style="text-align: right;" style="align: right;" width="54%">\$${subtotal.toFixed(2)}</td>
                 </tr>
                 `);
@@ -81,7 +83,7 @@
           // Tax
           document.write(`
                 <tr>
-                    <td style="text-align: center;" colspan="3" width="67%"><span style="font-family: arial;">Tax @
+                    <td style="text-align: right;" colspan="3" width="67%"><span style="font-family: arial;">Tax @
                         5.75%</span></td>
                     <td style="text-align: right;" width="54%">\$${tax.toFixed(2)}</td>
                 </tr>
@@ -91,7 +93,7 @@
           // Total
           document.write(`
                 <tr class="total">
-                    <td style="text-align: center;" colspan="3" width="67%"><strong>Total</strong></td>
+                    <td style="text-align: right;" colspan="3" width="67%"><strong>Total</strong></td>
                     <td style="text-align: right;" width="54%"><strong>\$${total.toFixed(2)}</strong></td>
                 </tr>
                 `);

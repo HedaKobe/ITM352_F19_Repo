@@ -1,31 +1,31 @@
 {
     "ttejero": {
-        "firstname": "Trevin",
-        "lastname": "Tejero",
+        "fname": "Trevin",
+        "lname": "Tejero",
         "password": "duck",
         "email": "ttejero@hawaii.edu"
     },
     "issapas": {
-        "firstname": "Carissa",
-        "lastname": "Pasco",
+        "fname": "Carissa",
+        "lname": "Pasco",
         "password": "avocado",
         "email": "issapas@hawaii.edu"
     },
     "kylef": {
-        "firstname": "Kyle",
-        "lastname": "Fujita",
+        "fname": "Kyle",
+        "lname": "Fujita",
         "password": "bakadi",
         "email": "kylef@hawaii.edu"
     },
     "adrosario": {
-        "firstname": "Adrianne",
-        "lastname": "Del Rosario",
+        "fname": "Adrianne",
+        "lname": "Del Rosario",
         "password": "nursing123",
         "email": "adrosario@hawaii.edu"
     },
     "itm352": {
-        "firstname": "ITM",
-        "lastname": "352",
+        "fname": "ITM",
+        "lname": "352",
         "password": "grader",
         "email": "itm352@hawaii.edu"
     }
