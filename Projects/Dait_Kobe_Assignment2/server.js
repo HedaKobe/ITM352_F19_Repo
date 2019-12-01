@@ -104,11 +104,9 @@ function process_login_form(request, response) {
             error2 = 'username doesnt exist';
             console.log(error2);
         }
-
     }
     response.redirect('login_display.html?' + qString); // Redirects to Login page
 }
-
 
 function process_register_form(request, response) {
     // Validates registration data
