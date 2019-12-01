@@ -28,6 +28,11 @@ app.post("/register_form", function (request, response) {
     process_register_form(request, response);
 });
 
+// Displays error message in an alert
+function error_message() {
+    alert('Welcome!');
+}
+
 // Taken from Lab 14
 // Function used to check for valid quantities
 function isNonNegInt(q, returnErrors = false) {
@@ -36,7 +41,7 @@ function isNonNegInt(q, returnErrors = false) {
         q = 0;
     }
     if (Number(q) != q) { // Check if string is a number value
-        error = 'Not a number!'; 
+        error = 'Not a number!';
     }
     if (q < 0) { // Check if it is non-negative
         error = 'Negative value!';
