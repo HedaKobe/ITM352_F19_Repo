@@ -15,7 +15,7 @@ app.all('*', function (request, response, next) {
 });
 
 app.use(myParser.urlencoded({ extended: true })); //Server-side processing
-// Runs the function process_quantity_form
+// Runs the function quantity form
 app.post("/process_form", function (request, response) {
     process_quantity_form(request.body, response);
 });
@@ -23,9 +23,9 @@ app.post("/process_form", function (request, response) {
 app.post("/login_form", function (request, response) {
     process_login_form(request, response); // Here is where you pass request.body which will be saves in POST inside the function
 });
-// Runs the function process_register_form
+// Runs the function register form
 app.post("/register_form", function (request, response) {
-    process_purchase_form(request, response);
+    process_register_form(request, response);
 });
 
 // Taken from Lab 14
@@ -35,9 +35,15 @@ function isNonNegInt(q, returnErrors = false) {
     if (q == "") { // Adds a 0 if no values are added
         q = 0;
     }
-    if (Number(q) != q) error = 'Not a number!'; // Check if string is a number value
-    if (q < 0) error = 'Negative value!'; // Check if it is non-negative
-    if (parseInt(q) != q) error = 'Not an integer!'; // Check that it is an integer
+    if (Number(q) != q) { // Check if string is a number value
+        error = 'Not a number!'; 
+    }
+    if (q < 0) { // Check if it is non-negative
+        error = 'Negative value!';
+    }
+    if (parseInt(q) != q) { // Check that it is an integer
+        error = 'Not an integer!';
+    }
     return returnErrors ? error : (error.length == 0);
 }
 
@@ -47,23 +53,22 @@ function process_quantity_form(POST, response) {
         // Check if the quantities are valid
         var qString = queryString.stringify(POST);
         var errors = {}; // assume no errors at first
+        // Source from Office Hours
         // For loop checks each quantity
         for (i in products) {
             let q = POST[`quantity${i}`];
             if (isNonNegInt(q) == false) {
                 errors[`quantityError${i}`] = isNonNegInt(q, true);
-                console.log(isNonNegInt(q, true));
-
             }
         }
         console.log(errors);
+        // Source from Office Hours
         // If there are no errors, redirect to login, otherwise send to products page
         if (Object.keys(errors).length === 0 && errors.constructor === Object) {
             response.redirect('login_display.html?' + qString); // Redirects to Login page if it passes through function
         } else {
             qString = qString + "&" + queryString.stringify(errors);
             response.redirect('products_display.html?' + qString); // Redirects back to products page if it fails
-            // Display erros on products display
         }
     }
 }
@@ -93,7 +98,7 @@ function process_login_form(request, response) {
                 return;
             } else {
                 error1 = 'password incorrect';
-                console.log(error1);   
+                console.log(error1);
             }
         } else {
             error2 = 'username doesnt exist';
@@ -103,7 +108,9 @@ function process_login_form(request, response) {
     }
     response.redirect('login_display.html?' + qString); // Redirects to Login page
 }
-function process_purchase_form(request, response) {
+
+
+function process_register_form(request, response) {
     // Validates registration data
 
     //all good so save the new user
