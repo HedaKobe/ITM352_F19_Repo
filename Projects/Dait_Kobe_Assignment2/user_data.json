@@ -1,17 +1,12 @@
 {
-    "ttejero": {
-        "name": "Trevin Tejero",
-        "password": "duck",
-        "email": "ttejero@hawaii.edu"
-    },
-    "adrosario": {
-        "name": "Adrianne Del Rosario",
-        "password": "nursing123",
-        "email": "adrosario@hawaii.edu"
-    },
     "itm352": {
         "name": "itm 352",
         "password": "grader",
         "email": "itm352@hawaii.edu"
+    },
+    "kobedait": {
+        "name": "Kobe Dait",
+        "password": "password",
+        "email": "kobedait@hawaii.edu"
     }
 }
