@@ -5,7 +5,7 @@ var myParser = require("body-parser"); //Calls the package-lock.json
 var fs = require('fs');
 var data = require('./public/products.js');
 var products = data.products;
-var queryString = require("querystring");
+const queryString = require("querystring");
 var user_data = 'user_data.json';
 
 var app = express();
@@ -15,68 +15,50 @@ app.all('*', function (request, response, next) {
 });
 
 app.use(myParser.urlencoded({ extended: true })); //Server-side processing
-// Runs the function quantity form
-app.post("/process_form", function (request, response) {
+app.post("/process_form", function (request, response) { // Runs the function quantity form
     process_quantity_form(request.body, response);
 });
-// Runs the function login form
-app.post("/login_form", function (request, response) {
-    process_login_form(request, response); // Here is where you pass request.body which will be saves in POST inside the function
+app.post("/login_form", function (request, response) { // Runs the function login form
+    process_login_form(request, response);
 });
-// Runs the function register form
-app.post("/register_form", function (request, response) {
+app.post("/register_form", function (request, response) { // Runs the function register form
     process_register_form(request, response);
 });
-
-// Displays error message in an alert
-function error_message() {
-    alert('Welcome!');
-}
 
 // Taken from Lab 14
 // Function used to check for valid quantities
 function isNonNegInt(q, returnErrors = false) {
     error = ''; // assume no errors at first
-    if (q == "") { // Adds a 0 if no values are added
-        q = 0;
-    }
-    if (Number(q) != q) { // Check if string is a number value
-        error = 'Not a number!';
-    }
-    if (q < 0) { // Check if it is non-negative
-        error = 'Negative value!';
-    }
-    if (parseInt(q) != q) { // Check that it is an integer
-        error = 'Not an integer!';
-    }
-    return returnErrors ? error : (error.length == 0);
+    if (q == "") q = 0; // Adds a 0 if no values are added
+    if (Number(q) != q) error = 'Not a number!'; // Check if string is a number value
+    if (q < 0) error = 'Negative value!'; // Check if it is non-negative
+    if (parseInt(q) != q) error = 'Not an integer!'; // Check that it is an integer
+    return returnErrors ? error : (error.length == 0); // Returns any errors
 }
 
+// 
 // Function to redirect to login page if true
 function process_quantity_form(POST, response) {
-    if (typeof POST['purchase_submit_button'] != 'undefined') {
-        // Check if the quantities are valid
-        var qString = queryString.stringify(POST);
-        var errors = {}; // assume no errors at first
-        // Source from Office Hours
-        // For loop checks each quantity
-        for (i in products) {
-            let q = POST[`quantity${i}`];
-            if (isNonNegInt(q) == false) {
-                errors[`quantityError${i}`] = isNonNegInt(q, true);
-            }
+    var hasValidQuantities = true; //defining the hasValidQuantities variable and assuming all quantities are valid
+    var hasPurchases = false; //assume the quantity of purchases are false
+    for (i = 0; i < products.length; i++) { //for loop for each product array that increases the count by 1
+        q = POST['quantity' + i]; //quantity entered by the user for a product is aessigned into q
+        if (isNonNegInt(q) == false) { //if the quantity enetered by the user is invalid integer
+            hasValidQuantities = false; //hasValidQuantities is false or nothing was inputed in the quantity textbox
         }
-        console.log(errors);
-        // Source from Office Hours
-        // If there are no errors, redirect to login, otherwise send to products page
-        if (Object.keys(errors).length === 0 && errors.constructor === Object) {
-            response.redirect('login_display.html?' + qString); // Redirects to Login page if it passes through function
-        } else {
-            qString = qString + "&" + queryString.stringify(errors);
-            response.redirect('products_display.html?' + qString); // Redirects back to products page if it fails
+        if (q > 0) { //if quantity entered in the textbox is greater than 0
+            hasPurchases = true; //if q is greater than 0 than the hasPurchases is ok
         }
     }
-}
+    // if data is valid give user an invoice, if not give them an error
+    qString = queryString.stringify(POST); //string query together
+    if (hasValidQuantities == true && hasPurchases == true) { //if both hasValidQuantities variable and hasPurchases variable are valid 
+        response.redirect('./login_display.html?' + qString); //if quantity is valid it will send user to invoice
+    }
+    else {
+        response.redirect("./products_display.html?" + qString); //if quantity is invalid it will send user back to products page
+    }
+};
 
 // Taken from Lab 14
 // Checks if JSON string already exists
@@ -119,10 +101,12 @@ function process_register_form(request, response) {
     //all good so save the new user
     username = request.body.username;
     users_reg_data[username] = {};
+    users_reg_data[username].fname = request.body.fname;
+    users_reg_data[username].lname = request.body.lname;
     users_reg_data[username].password = request.body.password;
     users_reg_data[username].email = request.body.email;
 
-    fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+    fs.writeFileSync(user_data, JSON.stringify(users_reg_data));
 
     console.log(username);
 }
