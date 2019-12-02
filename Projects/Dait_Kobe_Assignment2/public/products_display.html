@@ -3,8 +3,8 @@
   // Taken from Assignment 1 Example
   // Function used to check for valid quantities
   function isNonNegInt(q, return_errors = false) {
-    errors = []; // assume no errors at first
-    if (q == '') q = 0; // handle blank inputs as if they are 0
+    errors = []; // Assume no errors at first
+    if (q == '') q = 0; // Handle blank inputs as if they are 0
     if (Number(q) != q) errors.push('<font color="red">Not a number!</font>'); // Check if string is a number value
     else if (q < 0) errors.push('<font color="red">Not a positive integer!</font>'); // Check if it is non-negative
     else if (parseInt(q) != q) errors.push('<font color="red">Not an integer!</font>'); // Check that it is an integer
@@ -19,21 +19,22 @@
     document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", "); //this displays the error messages above the quantity text box and tells the user what type of error they have
   }
   // Taken from Assignment 1 Example
+  // Function for when the page is submitted and is reloaded
   window.onload = function () { //function for when the user submits and the page finishes loading
-    let params = (new URL(document.location)).searchParams; // get the query string which has the form data
-    // form was submitted to check that quantities are valid then redirect to invoice if ok.
-    if (params.has('purchase_submit_button')) { //if the form has purchse_submit from the user clicking submit 
-      has_errors = false; // Assume no invalid quantities
+    let params = (new URL(document.location)).searchParams; // Get the query string which has the form data
+    // Checks if quantities are valid after page loads
+    if (params.has('purchase_submit_button')) { // If form has purchase_submit_form
+      has_errors = false; // Assume no errors
       total_qty = 0; // Used to check if quantities are inputted
-      for (i = 0; i < products.length; i++) { //loop to check quantity user inputs
-        if (params.has(`quantity${i}`)) { // if the form has quantity
-          a_qty = params.get(`quantity${i}`); //assigns the value 
-          // make textboxes sticky in case of invalid data
-          quantity_form[`quantity${i}`].value = a_qty; //assigns a_qty into the value of quantity(i) in quantity_form
-          total_qty += a_qty; //total_qty becomes total_qty plus a_qty
-          if (!isNonNegInt(a_qty)) { //if a_qty is not a valid NonNegInt then it will display these errors 
-            has_errors = true; // oops, invalid quantity
-            checkQuantityTextbox(quantity_form[`quantity${i}`]); // show where the error is
+      for (i = 0; i < products.length; i++) { // For loop to check quantity user inputs
+        if (params.has(`quantity${i}`)) { // If the form has quantity
+          a_qty = params.get(`quantity${i}`); // Defines a_qty
+          // Make textboxes sticky in case of invalid data
+          quantity_form[`quantity${i}`].value = a_qty; // Assigns a_qty into the value of quantity(i) in quantity_form
+          total_qty += a_qty; // Total_qty becomes total_qty plus a_qty
+          if (!isNonNegInt(a_qty)) { // If a_qty is not a valid NonNegInt, it will display these errors 
+            has_errors = true; //has_errors is true
+            checkQuantityTextbox(quantity_form[`quantity${i}`]); // Displays errors on page
           }
         }
       }
@@ -93,6 +94,7 @@
         </script>
       </main>
     </div>
+    <!-- Button to POST products page -->
     <div id="buyButton">
       <input name="purchase_submit_button" type="submit" value="Purchase">
     </div>
