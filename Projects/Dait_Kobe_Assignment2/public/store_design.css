@@ -145,12 +145,12 @@ input[type=submit]:hover {
 
 /* Invoice styling */
 
-.invoice-box {
+.invoice_box {
     width: 800px;
     background: #f1f1f1;
-    height: 500px;
+    height: 600px;
     padding: 60px 40px;
-    border-radius: 10px;
+    border-radius: 20px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -158,6 +158,6 @@ input[type=submit]:hover {
     border: 1px solid white;
 }
 
-.invoice-box table tr.total {
+.invoice_box table tr.total {
     border-bottom: 2px solid black;
 }
