@@ -54,8 +54,7 @@
       regError4 = params.get("RegisterError4"); //get the errors from the query and store into variable
       emailInvalid = '<font color="red">Email is invalid</font>'; //assigns same error into a variable
       if (regError4 == emailInvalid) { //if the error received is the same as the error stored in the variable
-        //document.getElementById("regemail").innerHTML = regError4; //set inner html to displayn the register error
-        alert(regError4);
+        document.getElementById("regemail").innerHTML = regError4; //set inner html to displayn the register error
       }
     }
 
