@@ -1,17 +1,1 @@
-{
-    "itm352": {
-        "name": "ITM 352",
-        "password": "grader",
-        "email": "itm352@hawaii.edu"
-    },
-    "kobedait": {
-        "name": "Kobe Dait",
-        "password": "password",
-        "email": "kobedait@hawaii.edu"
-    },
-    "atest": {
-        "name": "A Test",
-        "password": "test123",
-        "email": "atest@hawaii.edu"
-    }
-}
+{"itm352":{"name":"ITM 352","password":"grader","email":"itm352@hawaii.edu"},"kobedait":{"name":"Kobe Dait","password":"password","email":"kobedait@hawaii.edu"},"atest":{"name":"A Test","password":"test123","email":"atest@hawaii.edu"},"btest":{"name":"B Test","password":"test321","email":"btest@hawaii.edu"}}
