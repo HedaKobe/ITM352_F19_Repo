@@ -1,6 +1,81 @@
-<script src="user_data.json" type="text/javascript"></script>
+<!-- Author: Kobe Dait -->
+<!-- File Description: Registration Page -->
 
-<!-- All HTML below is taken from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
+<script src="user_data.json" type="text/javascript"></script>
+<script>
+  // Script source from Shane Shimizu
+  let params = (new URL(document.location)).searchParams; //gives access to the get decoded query arguments in the URL.
+  window.onload = function () { //when the page loads
+    if (params.has("RegFullnameError")) { //if has RegFullnameError from query
+      regError = params.get("RegFullnameError"); //get the errors from the query and store into variable
+      nameLong = '<font color="red">Full Name must be 30 characters or less</font>'; //assigns same error message into a variable
+      nameNoLetter = '<font color="red">Full Name must be letters only</font>'; //assigns same error message into a variable
+      if (regError == nameLong) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regfullname").innerHTML = regError; //set inner html to display the register error
+      }
+      if (regError == nameNoLetter) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regfullname").innerHTML = regError; //set inner html to displayn the register error
+      }
+    }
+
+    if (params.has("RegPasswordError")) { //if has RegPasswordError from query 
+      regError2 = params.get("RegPasswordError"); //get the errors from the query and store into variable
+      passNoMatch = '<font color="red">Password DOES NOT Match</font>'; //assigns same error into a variable
+      passLength = '<font color="red">Password must be at least six characters</font>'; //assigns same error into a variable
+      if (regError2 == passLength) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regpassword").innerHTML = regError2; //set inner html to displayn the register error
+      }
+      if (regError2 == passNoMatch) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regrepeatpassword").innerHTML = regError2; //set inner html to displayn the register error
+      }
+    }
+
+    if (params.has("RegUsernameError")) { //if has RegUsernameError from query 
+      regError3 = params.get("RegUsernameError"); //get the errors from the query and store into variable
+      useNumLet = '<font color="red">Username must be characters and numbers only</font>'; //assigns same error into a variable
+      useLong = '<font color="red">Username must be ten characters or less</font>'; //assigns same error into a variable
+      useShort = '<font color="red">Username must be at least four characters</font>'; //assigns same error into a variable
+      useTaken = '<font color="red">User already registered</font>'; //assigns same error into a variable
+      if (regError3 == useNumLet) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regusername").innerHTML = regError3; //set inner html to displayn the register error
+      }
+      if (regError3 == useLong) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regusername").innerHTML = regError3; //set inner html to displayn the register error
+      }
+      if (regError3 == useShort) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regusername").innerHTML = regError3; //set inner html to displayn the register error
+      }
+      if (regError3 == useTaken) {
+        document.getElementById("regusername").innerHTML = regError3; //set inner html to displayn the register error
+      }
+    }
+
+    if (params.has("RegEmailError")) { //if has RegEmailError from query
+      regError4 = params.get("RegisterError4"); //get the errors from the query and store into variable
+      emailInvalid = '<font color="red">Email is invalid</font>'; //assigns same error into a variable
+      if (regError4 == emailInvalid) { //if the error received is the same as the error stored in the variable
+        //document.getElementById("regemail").innerHTML = regError4; //set inner html to displayn the register error
+        alert(regError4);
+      }
+    }
+
+    if (params.has("stickRegFullname")) { //if has stickRegFullname
+      showRegFullname = params.get("stickRegFullname"); //get the info from the query and store into variable
+      document.getElementById("regfullnamebox").value = showRegFullname; //sets the value to the inoput of the useer
+    }
+
+    if (params.has("stickUsername")) { //if has stickRegFullname
+      showUsername = params.get("stickUsername"); //get the info from the query and store into variable
+      document.getElementById("regusernamebox").value = showUsername; //sets the value to the input of the user
+    }
+
+    if (params.has("stickEmail")) { //if has stickEmail
+      showEmail = params.get("stickEmail"); //get the info from the query and store into variable
+      document.getElementById("regemailbox").value = showEmail; //set the value to the input of the user
+    }
+  }
+</script>
+<!-- Some HTML format sourced from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -13,47 +88,43 @@
 </head>
 
 <body>
-  <form action="/register_form" class="register-form" method="POST" onsubmit="return regErrors()">
+  <!-- Each div has an input box for registration -->
+  <form id="register_form" class="register-form" method="POST">
     <h1>Sign Up</h1>
     <div class="txtb">
-      <input type="text" name="fname">
-      <span data-placeholder="First Name"></span>
-      <div id="fname_error"></div>
+      <input id="regfullnamebox" type="text" name="fullname" required>
+      <span data-placeholder="Full Name"></span>
     </div>
+    <div id="regfullname"></div>
 
     <div class="txtb">
-      <input type="text" name="lname">
-      <span data-placeholder="Last Name"></span>
-      <div id="lname_error"></div>
-    </div>
-
-    <div class="txtb">
-      <input type="text" name="username">
+      <input id="regusernamebox" type="text" name="username" required>
       <span data-placeholder="Username"></span>
-      <div id="username_error"></div>
     </div>
+    <div id="regusername"></div>
 
     <div class="txtb">
-      <input type="text" name="email">
+      <input id="regemailbox" type="text" name="email" required>
       <span data-placeholder="Email"></span>
-      <div id="email_error"></div>
     </div>
-    
+    <div id="regemail"></div>
+
     <div class="txtb">
-      <input type="password" name="password">
+      <input type="password" name="password" required>
       <span data-placeholder="Password"></span>
-      <div id="password_error"></div>
     </div>
+    <div id="regpassword"></div>
 
     <div class="txtb">
-        <input type="password" name="repeat_password">
-        <span data-placeholder="RepeatPassword"></span>
-        <div id="repeat_password_error"></div>
-      </div>
-
-    <input name="login_submit_button" type="submit" class="logbtn" value="Register">
+      <input type="password" name="repeat_password" required>
+      <span data-placeholder="Confirm Password"></span>
+    </div>
+    <div id="regrepeatpassword"></div>
+    <br>
+    <input name="register_submit_button" type="submit" class="logbtn" value="Register">
   </form>
 
+  <!-- Script sourced from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
   <script type="text/javascript">
     // Creates the animaitons on Login form
     $(".txtb input").on("focus", function () {
@@ -65,8 +136,11 @@
         $(this).removeClass("focus");
     });
   </script>
-
-
 </body>
 
 </html>
+<script>
+  // Source from Shane Shimizu
+  // Sets link with quantity data to pass to next page
+  register_form.action = "/register_form" + document.location.search;
+</script>
