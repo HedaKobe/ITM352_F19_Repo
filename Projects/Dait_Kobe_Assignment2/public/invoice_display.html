@@ -1,16 +1,29 @@
-<!-- Template taken from Invoice 1_1 -->
+<!-- Author: Kobe Dait -->
+<!-- File Description: Invoice Page -->
 
+<!-- Template taken from Invoice 1_1 -->
 <script src="./products.js" type="text/javascript"></script>
 
 <script>
-  window.onload = function () {
-    /*if (params.has("username")) { // Greet the user (personalization). 
-      alert(`Thank you for your purchase ${params.get("username")}. Please buy again soon!`);
-    } else { // this is security, must have a username or get bounced to login
-      alert("You must login or register before checking out!");
-      window.location = "./login_display.html" + window.location.search;
+  // Script source from Shane Shimizu
+  window.onload = function () { // When page loads
+    emptyName = document.getElementById("showFullName").innerHTML; // Get the innner html of the given ID and assigsn into a variable
+    compareVar = 0; // Create variable to compare to emptyname variable
+    if (params.has("stickFullname")) { // If has stickFullname
+      displayName = params.get("stickFullname"); // Get the information from the query 
+      document.getElementById("showFullName").innerHTML = displayName; // Sets the inner html to display the username
+    } else if (emptyName == compareVar) { // If the inner html does not change from 0 or 0==0
+      alert('You will be redirected to previous page.  Please login or register first');
+      javascript: history.go(-1) // Redirect user back to login page
     }
-    */
+    if (params.has("stickEmail")) {
+      displayEmail = params.get("stickEmail"); // Get the information from the query; email
+      document.getElementById("showEmail").innerHTML = displayEmail;
+    }
+    if (params.has("stickUsername")) {
+      displayUserName = params.get("stickUsername"); // Get the information from the query; username
+      document.getElementById("showUserName").innerHTML = displayUserName;
+    }
   }
 </script>
 <html lang="en">
@@ -35,15 +48,21 @@
   <table class="invoice_box" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
-        <th style="text-align: center;" width="43%">Item</th>
+        <td style="text-align: right;" width="43%"><b>Username:</b><br><b>Email: </b></td>
+        <td width="5%">&nbsp;</td>
+        <td  width="11%"><div id="showUserName"></div><div id="showEmail"></div></td>
+        <td style="text-align: right;" width="67%">Thank you,<div id="showFullName">0</div>for your purchase!</td>
+      </tr>
+      <tr>
+        <th style="text-align: center;" width="33%">Item</th>
         <th style="text-align: center;" width="11%">Quantity</th>
         <th style="text-align: center;" width="13%">Price</th>
-        <th style="text-align: center;" width="54%">Extended Prices</th>
+        <th style="text-align: center;" width="53%">Extended Prices</th>
       </tr>
       <script>
         // Taken from Assignment 2 example
         // Get the query string values from form submission
-        let params = (new URL(document.location)).searchParams;
+        let params = (new URL(document.location)).searchParams; // Gives access to the get decoded query arguments in the URL
 
         // Processes invoice after form is submitted
         if (params.has('purchase_submit_button')) {
@@ -56,10 +75,10 @@
               subtotal += extended_price;
               document.write(`
             <tr>
-              <td width="43%">${products[i].exotic}</td>
+              <td width="33%">${products[i].exotic}</td>
               <td align="center" width="11%">${a_qty}</td>
               <td align="right" width="13%">\$${products[i].price}</td>
-              <td align="right" width="54%">\$${extended_price}</td>
+              <td align="right" width="53%">\$${extended_price}</td>
             </tr>
             `);
             }

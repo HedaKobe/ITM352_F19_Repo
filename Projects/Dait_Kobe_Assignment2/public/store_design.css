@@ -1,3 +1,6 @@
+/* Author: Kobe Dait */
+/* File Description: General Styling Sheet
+
 /* Header styling */
 
 header {
@@ -147,17 +150,13 @@ input[type=submit]:hover {
 
 .invoice_box {
     width: 800px;
-    background: #f1f1f1;
+    background: white;
     height: 600px;
-    padding: 60px 40px;
+    padding: 40px 40px;
     border-radius: 20px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border: 1px solid white;
-}
-
-.invoice_box table tr.total {
-    border-bottom: 2px solid black;
 }

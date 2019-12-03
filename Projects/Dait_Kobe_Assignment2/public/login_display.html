@@ -1,3 +1,6 @@
+<!-- Author: Kobe Dait -->
+<!-- File Description: Login Page -->
+
 <script>
   let params = (new URL(document.location)).searchParams;
   if (params.has("LoginError")) { // If has login errors from query
@@ -56,7 +59,7 @@
     <div class="bottom-text">
       Don't have an account?
       <!-- Button for accessing register page -->
-      <a id="registrationpage"><button type="button" class="button">Register</button></a>
+      <a id="registrationpage"><button type="button" class="regButton">Register</button></a>
     </div>
   </form>
 
@@ -76,6 +79,7 @@
 
 </html>
 <script>
+  // Source from Shane Shimizu
   // Sets link with quantity data to pass to next page
   registrationpage.href = "register_display.html" + document.location.search;
   loginName.action = "./login_form" + document.location.search; 

@@ -1,3 +1,6 @@
+// Author: Kobe Dait
+// File Description: Server-side Processing
+
 // All the code below came from Lab 13 and is modified to my liking
 
 var express = require('express');
@@ -67,6 +70,7 @@ app.post("/process_form", function (request, response) {
 });
 
 // Taken from Lab 14
+// Post sourced from Shane Shimizu
 // Processes login page
 app.post("/login_form", function (request, response) {
     console.log(request.body); // Checks in console
@@ -75,7 +79,7 @@ app.post("/login_form", function (request, response) {
     inputUser = request.body.username;
     inputPass = request.body.password;
     the_username = request.body.username.toLowerCase(); // Assigns inputted username and is case-insensitive
-    
+
     // Redirect to invoice page if true, else back to login page
     if (typeof users_reg_data[the_username] != 'undefined') { // Checks if username exists in user database
         if (users_reg_data[the_username].password == request.body.password) { // If password matches with username in user database
@@ -92,35 +96,138 @@ app.post("/login_form", function (request, response) {
         } else if (users_reg_data[the_username].password != request.body.password) { // Else if password does not match username in user database
             error = '<font color="red">Incorrect Password</font>'; // Assigns error to html to be displayed
             stickInput = inputUser; // Assigns inputted username to a sticky variable
+            // Puts variables into query
+            request.query.LoginError = error;
+            request.query.logStickInput = stickInput;
         }
     } else {
-        error = the_username + "<style=word-spacing: 5px>: </style>" + "<font color='red'>is not registered</font>"; // Assigns error to html to be displayed
+        error = "<font color='red'>Invalid Username: </font>" + the_username; // Assigns error to html to be displayed
         stickInput = inputUser; // Assigns inputted username to a sticky variable
+        // Puts variables into query
+        request.query.LoginError = error;
+        request.query.logStickInput = stickInput;
     }
-    // Puts variables into query
-    request.query.LoginError = error;
-    request.query.logStickInput = stickInput;
     qString = queryString.stringify(request.query); // String query together
     response.redirect("./login_display.html?" + qString); // Send back to login page with qString
 });
 
 
 // Taken from Lab 14
+// Post sourced from Shane Shimizu
 // Processes register page
-app.post("/register_form", function (request, response) { // Runs the functions
-    // Validates registration data
+app.post("/register_form", function (request, response) {
+    var qString = queryString.stringify(request.query); // String query together
+    // Assigns textbox inputs to values
+    regInputUser = request.body.username.toLowerCase(); // Assigns the username to lower case for unique names
+    regInputFullname = request.body.fullname;
+    regInputPassword = request.body.password;
+    regInputRepPassword = request.body.repeat_password;
+    regInputEmail = request.body.email;
+    email = request.body.email.toLowerCase();
 
-    // All good so save the new user
-    username = request.body.username;
-    users_reg_data[username] = {};
-    users_reg_data[username].fname = request.body.fname;
-    users_reg_data[username].lname = request.body.lname;
-    users_reg_data[username].password = request.body.password;
-    users_reg_data[username].email = request.body.email;
+    if (regInputFullname.length > 30) { // If full name is over 30 characters
+        fullnameErrorReg = '<font color="red">Full Name must be 30 characters or less</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else if (!(/^[A-Za-z ]+$/.test(regInputFullname))) { // Regular expression; else if the fullname does not equal letters only, source: https://www.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
+        fullnameErrorReg = '<font color="red">Full Name must be letters only</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else { // Else there are no errors
+        fullnameErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    }
 
-    fs.writeFileSync(filename, JSON.stringify(users_reg_data));
+    if (regInputPassword.length < 6) { //if password the user enters is less than 6 characters
+        passwordErrorReg = '<font color="red">Password must be more than 6 characters long</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else if (regInputRepPassword != regInputPassword) { // Else if the repeat password does not match the password enterd from the user
+        passwordErrorReg = '<font color="red">Password DOES NOT Match</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else { // Else there are no errors
+        passwordErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    }
 
-    console.log(username);
+    if (typeof users_reg_data[regInputUser] != 'undefined') { // Check if the username is already taken
+        usernameErrorReg = '<font color="red">User already registered</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else if (!(/^[a-zA-Z0-9]+$/.test(regInputUser))) { // If the username does not equal letters and numbers only, source: https://www.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
+        usernameErrorReg = '<font color="red">Username must be characters and numbers only</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else if (regInputUser.length > 10) { // If the username is greater than 10 characters long
+        usernameErrorReg = useLong = '<font color="red">Username must be ten characters or less</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else if (regInputUser.length < 4) { // If the username is less than 4 characters long
+        usernameErrorReg = '<font color="red">Username must be at least four characters</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else { // Else there are no errors
+        usernameErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    }
+
+    if (!(/^[a-zA-Z0-9._]+@[a-zA-Z.]+\.[a-zA-Z]{2,3}$/.test(regInputEmail))) { // follows X@Y.Z format; address which can only contain letters, numbers, and the characters “_” and “.”; Y is the host machine which can contain only letters and numbers and “.” characters; Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”
+        emailErrorReg = '<font color="red">Email is invalid</font>'; // Assigns error to html to be displayed
+        regIncorrectFullName = regInputFullname; // Stores stick input into a variable
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    } else { // Else there are no errors
+        emailErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFullName = regInputFullname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+    }
+
+    // If there are no errors stored in each error variable, user is stored in users_reg_data object
+    if (fullnameErrorReg == '' && passwordErrorReg == '' && usernameErrorReg == '' && emailErrorReg == '') {
+        users_reg_data[regInputUser] = {}; // New user becomes new property of users_reg_data object
+        users_reg_data[regInputUser].name = request.body.fullname; // Name entered is stored in users_reg_data object
+        users_reg_data[regInputUser].password = request.body.password; // Password entered is stored in users_reg_data object
+        users_reg_data[regInputUser].email = request.body.email; // Email entered is stored in users_reg_data object
+        fs.writeFileSync(filename, JSON.stringify(users_reg_data)); // Strings data into JSON for users_reg_data
+
+        // Puts variables into query
+        request.query.stickFullname = regInputFullname;
+        request.query.stickEmail = regInputEmail;
+        request.query.stickUsername = regInputUser;
+        qString = queryString.stringify(request.query); // String query together
+        response.redirect("./invoice_display.html?" + qString); // Send to invoice page with query
+
+        console.log(request.body);
+    }
+    // Retrieve variables and puts them into query; for displaying errors on page
+    request.query.RegFullnameError = fullnameErrorReg;
+    request.query.RegPasswordError = passwordErrorReg;
+    request.query.RegUsernameError = usernameErrorReg;
+    request.query.RegEmailError = emailErrorReg;
+    
+    // Retrieve variables and puts them into query; for sticking user input
+    request.query.stickRegFullname = regIncorrectFullName;
+    request.query.stickUsername = regIncorrectUsername;
+    request.query.stickEmail = regIncorrectEmail;
+
+    qString = queryString.stringify(request.query); // String query together
+    response.redirect("./register_display.html?" + qString); // Send to register page with query
 });
 
 app.use(express.static('./public'));

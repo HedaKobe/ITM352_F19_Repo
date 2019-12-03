@@ -1,6 +1,6 @@
 {
     "itm352": {
-        "name": "itm 352",
+        "name": "ITM 352",
         "password": "grader",
         "email": "itm352@hawaii.edu"
     },
@@ -8,5 +8,10 @@
         "name": "Kobe Dait",
         "password": "password",
         "email": "kobedait@hawaii.edu"
+    },
+    "atest": {
+        "name": "A Test",
+        "password": "test123",
+        "email": "atest@hawaii.edu"
     }
 }
