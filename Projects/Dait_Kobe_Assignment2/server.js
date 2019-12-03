@@ -143,7 +143,7 @@ app.post("/register_form", function (request, response) {
     }
 
     if (regInputPassword.length < 6) { //if password the user enters is less than 6 characters
-        passwordErrorReg = '<font color="red">Password must be more than 6 characters long</font>'; // Assigns error to html to be displayed
+        passwordErrorReg = '<font color="red">Password must be at least six characters</font>'; // Assigns error to html to be displayed
         regIncorrectFullName = regInputFullname; // Stores stick input into a variable
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
