@@ -28,6 +28,7 @@ var user_product_quantities = {};
 app.use(session({ secret: "ITM352 rocks!" }));
 app.get("/use_session", function (request, response) {
     response.send(`welcome, your session ID is ${request.session.id}`);
+    request.session.destroy();
 });
 
 app.get("/set_cookie", function (request, response) {
@@ -40,11 +41,6 @@ app.use("/use_cookie", function (request, response) {
     }
     response.send(output);
 });
-
-
-
-
-
 
 
 
@@ -100,7 +96,7 @@ app.post("/login", function (request, response) {
             }
             request.session.last_login = now;
             response
-                .cookie('username', the_username, { maxAge: 10 * 1000 })
+                .cookie('username', the_username, { maxAge: 60 * 1000 })
                 .send(msg + '<br>' + `${the_username} is logged in at ${now}`);
 
         } else {
