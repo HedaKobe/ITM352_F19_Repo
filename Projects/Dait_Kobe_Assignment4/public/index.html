@@ -32,13 +32,13 @@
 <head>
   <meta charset="utf-8">
   <title>Login</title>
-  <link rel="stylesheet" href="morningBrew.css">
+  <link rel="stylesheet" href="loyalty.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
 </head>
 
 <body>
   <form name="loginName" class="login-form" method="POST">
-    <h1>Login</h1>
+    <img id="mb-logo" src="./images/mb-white-logo.png">
     <div class="txtb">
       <input id="userBox" type="text" name="username" onchange="javascript:this.value = this.value.toLowerCase();"
         required>
@@ -54,12 +54,6 @@
     <div id="passwordlabel"></div>
     <br>
     <input name="login_submit_button" type="submit" class="logbtn" value="Login">
-
-    <div class="bottom-text">
-      Don't have an account?
-      <!-- Button for accessing register page -->
-      <a id="registrationpage"><button type="button" class="regButton">Register</button></a>
-    </div>
   </form>
 
   <!-- Script from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
