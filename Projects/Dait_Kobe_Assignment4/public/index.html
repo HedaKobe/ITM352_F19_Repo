@@ -2,6 +2,7 @@
 <!-- File Description: Login Page -->
 
 <script>
+  // Source from Shane Shimizu
   let params = (new URL(document.location)).searchParams;
   if (params.has("LoginError")) { // If has login errors from query
     window.onload = function () { // Page loads
@@ -37,6 +38,11 @@
 </head>
 
 <body>
+  <header>
+    <ul id="header-bar">
+      <li id="page-title">Admin Loyalty Manager</li>
+    </ul>
+  </header>
   <form name="loginName" class="login-form" method="POST">
     <img id="mb-logo" src="./images/mb-white-logo.png">
     <div class="txtb">
@@ -73,7 +79,6 @@
 </html>
 <script>
   // Source from Shane Shimizu
-  // Sets link with quantity data to pass to next page
-  registrationpage.href = "results_display.html" + document.location.search;
+  // Sets link and goes to next page
   loginName.action = "./login_form" + document.location.search; 
 </script>

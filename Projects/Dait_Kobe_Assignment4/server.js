@@ -56,7 +56,7 @@ app.post("/login_form", function (request, response) {
             request.query.stickEmail = loginEmail;
             request.query.stickUsername = loginUserName;
             qString = queryString.stringify(request.query); // Strings query together
-            response.redirect("./invoice.html?" + qString); // Send to invoice page with query   
+            response.redirect("./manager.html?" + qString); // Send to invoice page with query   
         } else if (users_reg_data[the_username].password != request.body.password) { // Else if password does not match username in user database
             error = '<font color="red">Incorrect Password</font>'; // Assigns error to html to be displayed
             stickInput = inputUser; // Assigns inputted username to a sticky variable
@@ -72,7 +72,7 @@ app.post("/login_form", function (request, response) {
         request.query.logStickInput = stickInput;
     }
     qString = queryString.stringify(request.query); // String query together
-    response.redirect("./login.html?" + qString); // Send back to login page with qString
+    response.redirect("./index.html?" + qString); // Send back to login page with qString
 });
 
 app.use(express.static('./public'));
