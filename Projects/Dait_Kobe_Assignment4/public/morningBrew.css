@@ -19,12 +19,14 @@ body {
   background-image: linear-gradient(120deg, #3498db, #8e44ad);
 }
 
+
+
 /* Login window */
 
 .login-form {
   width: 360px;
   background: #f1f1f1;
-  height: 580px;
+  min-height: fit-content;
   padding: 80px 40px;
   border-radius: 10px;
   position: absolute;
@@ -36,26 +38,6 @@ body {
 .login-form h1 {
   text-align: center;
   margin-bottom: 60px;
-}
-
-/* Register window */
-
-.register-form {
-  overflow: scroll;
-  width: 360px;
-  background: #f1f1f1;
-  height: 680px;
-  padding: 60px 40px;
-  border-radius: 10px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.register-form h1 {
-  text-align: center;
-  margin-bottom: 20px;
 }
 
 /* User Input */
@@ -106,9 +88,10 @@ body {
   width: 100%;
 }
 
-/* Login Button styling */
+/* Button styling */
 
 .logbtn {
+  font-size: larger;
   display: block;
   width: 100%;
   height: 50px;
@@ -129,22 +112,4 @@ body {
   margin-top: 60px;
   text-align: center;
   font-size: 13px;
-}
-
-/* Register Button on Login Page styling */
-
-.regButton {
-  width: 80px;
-  height: 40px;
-  border: none;
-  background: linear-gradient(120deg, #3498db, #8e44ad, #3498db);
-  background-size: 200%;
-  color: #fff;
-  outline: none;
-  cursor: pointer;
-  transition: .5s;
-}
-
-.regButton:hover {
-  background-position: right;
 }
