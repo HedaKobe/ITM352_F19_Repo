@@ -69,6 +69,14 @@
       }
     }
 
+    if (params.has("RegBirthdayError")) { //if has RegEmailError from query
+      regError4 = params.get("RegBirthdayError"); //get the errors from the query and store into variable
+      birthdayInvalid = '<font color="red">Birthday date must be before today</font>'; //assigns same error into a variable
+      if (regError4 == birthdayInvalid) { //if the error received is the same as the error stored in the variable
+        document.getElementById("regbirthday").innerHTML = regError4; //set inner html to displayn the register error
+      }
+    }
+
     if (params.has("stickRegFirstname")) { //if has stickRegFirstname
       showRegFirstname = params.get("stickRegFirstname"); //get the info from the query and store into variable
       document.getElementById("regfirstnamebox").value = showRegFirstname; //sets the value to the inoput of the useer
@@ -88,14 +96,14 @@
       showEmail = params.get("stickEmail"); //get the info from the query and store into variable
       document.getElementById("regemailbox").value = showEmail; //set the value to the input of the user
     }
+
+    if (params.has("stickBirthday")) { //if has stickEmail
+      showBirthday = params.get("stickBirthday"); //get the info from the query and store into variable
+      document.getElementById("regbirthdaybox").value = showBirthday; //set the value to the input of the user
+    }
   }
 </script>
 
-<script>
-  function validateDate() {
-
-  }
-</script>
 <!-- Some HTML format sourced from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
 
 <!DOCTYPE html>
@@ -137,7 +145,7 @@
     <div id="regemail"></div>
 
     <div class="txtb">
-      <input id="regbirthdaybox" type="date" name="birthday" onkeyup="validateDate(this)" required>
+      <input id="regbirthdaybox" type="date" name="birthday" required>
       <span data-placeholder="Birthday"></span>
     </div>
     <div id="regbirthday"></div>
