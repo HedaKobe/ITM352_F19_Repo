@@ -8,6 +8,7 @@ var fs = require('fs');
 const queryString = require("querystring");
 var adminfile = 'admin_data.json';
 var customerfile = 'customer_data.json';
+var moment = require("moment");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
@@ -118,6 +119,11 @@ app.post("/customer_login", function (request, response) {
     response.redirect("./customer_login.html?" + qString); // Send back to login page with qString
 });
 
+
+var today = moment().format('YYYY/MM/D hh:mm:ss SSS');
+console.log(today);
+
+
 // Taken from Lab 14
 // Post sourced from Shane Shimizu
 // Processes register page
@@ -130,7 +136,10 @@ app.post("/customer_register", function (request, response) {
     regInputPassword = request.body.password;
     regInputRepPassword = request.body.repeat_password;
     regInputEmail = request.body.email;
+    regInputBirthday = request.body.birthday;
     email = request.body.email.toLowerCase();
+    var today = Date(Date.now);
+    today = today.toString();
 
     if (regInputFirstname.length > 30) { // If first name is over 30 characters
         firstnameErrorReg = '<font color="red">First Name must be 30 characters or less</font>'; // Assigns error to html to be displayed
@@ -138,18 +147,21 @@ app.post("/customer_register", function (request, response) {
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else if (!(/^[A-Za-z ]+$/.test(regInputFirstname))) { // Regular expression; else if the firstname does not equal letters only, source: https://www.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
         firstnameErrorReg = '<font color="red">First Name must be letters only</font>'; // Assigns error to html to be displayed
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else { // Else there are no errors
         firstnameErrorReg = ''; // No errors are stored in the variable
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     }
 
     if (regInputLastname.length > 30) { // If first name is over 30 characters
@@ -158,38 +170,21 @@ app.post("/customer_register", function (request, response) {
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else if (!(/^[A-Za-z ]+$/.test(regInputLastname))) { // Regular expression; else if the firstname does not equal letters only, source: https://www.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
         lastnameErrorReg = '<font color="red">Last Name must be letters only</font>'; // Assigns error to html to be displayed
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else { // Else there are no errors
         lastnameErrorReg = ''; // No errors are stored in the variable
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
-    }
-
-    if (regInputPassword.length < 6) { //if password the user enters is less than 6 characters
-        passwordErrorReg = '<font color="red">Password must be at least six characters</font>'; // Assigns error to html to be displayed
-        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
-        regIncorrectLastName = regInputLastname;
-        regIncorrectUsername = regInputUser;
-        regIncorrectEmail = regInputEmail;
-    } else if (regInputRepPassword != regInputPassword) { // Else if the repeat password does not match the password enterd from the user
-        passwordErrorReg = '<font color="red">Password DOES NOT Match</font>'; // Assigns error to html to be displayed
-        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
-        regIncorrectLastName = regInputLastname;
-        regIncorrectUsername = regInputUser;
-        regIncorrectEmail = regInputEmail;
-    } else { // Else there are no errors
-        passwordErrorReg = ''; // No errors are stored in the variable
-        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
-        regIncorrectLastName = regInputLastname;
-        regIncorrectUsername = regInputUser;
-        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     }
 
     if (typeof customer_data[regInputUser] != 'undefined') { // Check if the username is already taken
@@ -198,30 +193,58 @@ app.post("/customer_register", function (request, response) {
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else if (!(/^[a-zA-Z0-9]+$/.test(regInputUser))) { // If the username does not equal letters and numbers only, source: https://www.ntu.edu.sg/home/ehchua/programming/howto/Regexe.html
         usernameErrorReg = '<font color="red">Username must be characters and numbers only</font>'; // Assigns error to html to be displayed
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else if (regInputUser.length > 10) { // If the username is greater than 10 characters long
         usernameErrorReg = useLong = '<font color="red">Username must be ten characters or less</font>'; // Assigns error to html to be displayed
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else if (regInputUser.length < 4) { // If the username is less than 4 characters long
         usernameErrorReg = '<font color="red">Username must be at least four characters</font>'; // Assigns error to html to be displayed
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else { // Else there are no errors
         usernameErrorReg = ''; // No errors are stored in the variable
         regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
+    }
+
+    if (regInputPassword.length < 6) { // If password the user enters is less than 6 characters
+        passwordErrorReg = '<font color="red">Password must be at least six characters</font>'; // Assigns error to html to be displayed
+        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
+        regIncorrectLastName = regInputLastname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
+    } else if (regInputRepPassword != regInputPassword) { // Else if the repeat password does not match the password enterd from the user
+        passwordErrorReg = '<font color="red">Password DOES NOT Match</font>'; // Assigns error to html to be displayed
+        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
+        regIncorrectLastName = regInputLastname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
+    } else { // Else there are no errors
+        passwordErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
+        regIncorrectLastName = regInputLastname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     }
 
     if (!(/^[a-zA-Z0-9._]+@[a-zA-Z.]+\.[a-zA-Z]{2,3}$/.test(regInputEmail))) { // follows X@Y.Z format; address which can only contain letters, numbers, and the characters “_” and “.”; Y is the host machine which can contain only letters and numbers and “.” characters; Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”
@@ -230,21 +253,40 @@ app.post("/customer_register", function (request, response) {
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     } else { // Else there are no errors
         emailErrorReg = ''; // No errors are stored in the variable
         regIncorrectFirstName = regInputFirstname;
         regIncorrectLastName = regInputLastname;
         regIncorrectUsername = regInputUser;
         regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
+    }
+
+    if (regInputBirthday > today) { // If the date is past today's date
+        birthdayErrorReg = '<font color="red">Birthday date must be before today</font>'; // Assigns error to html to be displayed
+        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
+        regIncorrectLastName = regInputLastname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
+    } else { // Else there are no errors
+        birthdayErrorReg = ''; // No errors are stored in the variable
+        regIncorrectFirstName = regInputFirstname; // Stores stick input into a variable
+        regIncorrectLastName = regInputLastname;
+        regIncorrectUsername = regInputUser;
+        regIncorrectEmail = regInputEmail;
+        regIncorrectBirthday = regInputBirthday;
     }
 
     // If there are no errors stored in each error variable, user is stored in customer_data object
-    if (firstnameErrorReg == '' && lastnameErrorReg == '' && passwordErrorReg == '' && usernameErrorReg == '' && emailErrorReg == '') {
+    if (firstnameErrorReg == '' && lastnameErrorReg == '' && passwordErrorReg == '' && usernameErrorReg == '' && emailErrorReg == '' && birthdayErrorReg == '') {
         customer_data[regInputUser] = {}; // New user becomes new property of customer_data object
         customer_data[regInputUser].firstname = request.body.firstname; // Name entered is stored in customer_data object
         customer_data[regInputUser].lastname = request.body.lastname; // Name entered is stored in customer_data object
         customer_data[regInputUser].password = request.body.password; // Password entered is stored in customer_data object
         customer_data[regInputUser].email = request.body.email; // Email entered is stored in customer_data object
+        customer_data[regInputUser].birthday = request.body.birthday; // Birthday entered is stored into customer_data object
         fs.writeFileSync(customerfile, JSON.stringify(customer_data)); // Strings data into JSON for customer_data
 
         // Puts variables into query
@@ -252,8 +294,9 @@ app.post("/customer_register", function (request, response) {
         request.query.stickLastname = regInputLastname;
         request.query.stickEmail = regInputEmail;
         request.query.stickUsername = regInputUser;
+        request.query.stickBirthday = regInputBirthday;
         qString = queryString.stringify(request.query); // String query together
-        response.redirect("loyalty./.html?" + qString); // Send to invoice page with query
+        response.redirect("./loyalty.html?" + qString); // Send to invoice page with query
 
         console.log(request.body);
     }
@@ -263,12 +306,14 @@ app.post("/customer_register", function (request, response) {
     request.query.RegPasswordError = passwordErrorReg;
     request.query.RegUsernameError = usernameErrorReg;
     request.query.RegEmailError = emailErrorReg;
+    request.query.RegBirthdayError = birthdayErrorReg;
 
     // Retrieve variables and puts them into query; for sticking user input
     request.query.stickRegFirstname = regIncorrectFirstName;
     request.query.stickRegLastname = regIncorrectLastName;
     request.query.stickUsername = regIncorrectUsername;
     request.query.stickEmail = regIncorrectEmail;
+    request.query.stickBirthday = regIncorrectBirthday;
 
     qString = queryString.stringify(request.query); // String query together
     response.redirect("./register.html?" + qString); // Send to register page with query
