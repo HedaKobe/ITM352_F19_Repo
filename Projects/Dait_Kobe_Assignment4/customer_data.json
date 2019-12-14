@@ -1,0 +1,23 @@
+{
+    "kobedait": {
+        "firstname": "Kobe",
+        "lastname": "Dait",
+        "password": "password",
+        "email": "kobedait@hawaii.edu",
+        "dob": "09/15/1998"
+    },
+    "test": {
+        "firstname": "morning",
+        "lastname": "brew",
+        "password": "morningbrew",
+        "email": "morningbrew@gmail.com",
+        "dob": "12/25/2018"
+    },
+    "itm352": {
+        "firstname": "ITM",
+        "lastname": "352",
+        "password": "grader",
+        "email": "itm352@gmail.com",
+        "dob": "12/13/2019"
+    }
+}

@@ -47,19 +47,18 @@ header {
 
 /* Login window */
 
-.login-form {
+.loyalty-form {
   width: 360px;
-  background: darkgray;
+  background: #555;
   min-height: fit-content;
   padding: 50px 40px;
-  border-radius: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-.login-form h1 {
+.loyalty-form h1 {
   text-align: center;
   margin-bottom: 60px;
 }
@@ -88,7 +87,7 @@ header {
 .txtb span::before {
   content: attr(data-placeholder);
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 5px;
   color: black;
   transform: translateY(-50%);
@@ -119,7 +118,7 @@ header {
   display: block;
   width: 100%;
   height: 50px;
-  background: linear-gradient(120deg, black, darkgray, black);
+  background: linear-gradient(120deg, black, #555, black);
   background-size: 200%;
   color: #fff;
   outline: none;
@@ -129,4 +128,40 @@ header {
 
 .logbtn:hover {
   background-position: right;
+}
+
+/* Register Button on Customer Login Page styling */
+
+.regButton {
+  width: 80px;
+  height: 40px;
+  background: linear-gradient(120deg, black, #555, black);
+  background-size: 200%;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.regButton:hover {
+  background-position: right;
+}
+
+/* Customer search window */
+
+.customer-search {
+  width: 360px;
+  background: #555;
+  min-height: fit-content;
+  padding: 50px 40px;
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.customer-search h1 {
+  text-align: center;
+  margin-bottom: 60px;
 }

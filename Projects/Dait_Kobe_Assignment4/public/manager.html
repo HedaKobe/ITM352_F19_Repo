@@ -1,19 +1,60 @@
 <!-- Author: Kobe Dait -->
 <!-- File Description: Home Page -->
 
+<script>
+
+</script>
+
 <!-- HTML format from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
-  <title>Loyalty System</title>
-  <link rel="stylesheet" href="morningBrew.css">
+  <title>Admin Loyalty System</title>
+  <link rel="stylesheet" href="loyalty.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
 </head>
 
 <body>
+  <header>
+    <ul id="header-bar">
+      <li id="page-title">Admin Loyalty Manager</li>
+    </ul>
+  </header>
+  <h1>Points, birthday, last time you visit.</h1>
+  <form name="customerName" class="customer-search" method="POST">
+    <h1>Search Customer:</h1>
+    <div class="txtb">
+      <input id="userBox" type="text" name="user-name" onchange="javascript:this.value = this.value.toLowerCase();"
+        required>
+      <!--Makes the username case-insensitive-->
+      <span data-placeholder="Customer"></span>
+    </div>
+    <div id="customerlabel"></div>
+    <input name="search_button" type="submit" class="logbtn" value="Search">
+    <br>
+    <input name="databse_button" type="submit" class="logbtn" value="Database">
+    <div id="customerError"></div>
+  </form>
 
+  <!-- Script from https://darkcode1.blogspot.com/2019/07/animated-login-form-using-html-css.html -->
+  <script type="text/javascript">
+    // Creates the animaitons on Login form
+    $(".txtb input").on("focus", function () {
+      $(this).addClass("focus");
+    });
+
+    $(".txtb input").on("blur", function () {
+      if ($(this).val() == "")
+        $(this).removeClass("focus");
+    });
+  </script>
 </body>
 
 </html>
+<script>
+  // Source from Shane Shimizu
+  // Sets link and goes to next page
+  customerName.action = "./database" + document.location.search; 
+</script>
