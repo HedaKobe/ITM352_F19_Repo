@@ -1,9 +1,9 @@
 <!-- Author: Kobe Dait -->
-<!-- File Description: Registration Page -->
+<!-- File Description: Registration Page: For customers to sign up for the loyalty program -->
 
 <script>
   // Script source from Shane Shimizu
-  let params = (new URL(document.location)).searchParams; //gives access to the get decoded query arguments in the URL.
+  let params = (new URL(document.location)).searchParams; // Gives access to the get decoded query arguments in the URL.
   window.onload = function () { //when the page loads
     if (params.has("RegFirstnameError")) { //if has RegFirstnameError from query
       regError = params.get("RegFirstnameError"); //get the errors from the query and store into variable

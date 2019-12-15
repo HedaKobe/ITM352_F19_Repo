@@ -29,6 +29,7 @@ header {
   padding: 10px;
   list-style-type: none;
   overflow: hidden;
+
 }
 
 #page-title {
@@ -49,10 +50,10 @@ header {
 
 .loyalty-form {
   width: 360px;
+  min-height: min-content;
   background: #555;
-  min-height: fit-content;
   padding: 50px 40px;
-  position: absolute;
+  position: relative;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

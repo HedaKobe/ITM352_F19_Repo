@@ -1,14 +1,70 @@
 <!-- Author: Kobe Dait -->
 <!-- File Description: Customer Loyalty Page -->
 
+<script>
+    // Source from Shane Shimizu
+    let params = (new URL(document.location)).searchParams;
+    window.onload = function () {
+        if (params.has("stickRegFirstname")) { //if has stickRegFirstname
+            showRegFirstname = params.get("stickRegFirstname"); //get the info from the query and store into variable
+            document.getElementById("regfirstnamebox").value = showRegFirstname; //sets the value to the inoput of the useer
+        }
+
+        if (params.has("stickRegLastname")) { //if has stickRegLastname
+            showRegLastname = params.get("stickRegLastname"); //get the info from the query and store into variable
+            document.getElementById("reglastnamebox").value = showRegLastname; //sets the value to the inoput of the useer
+        }
+
+        if (params.has("stickUsername")) { //if has stickRegFirstname
+            showUsername = params.get("stickUsername"); //get the info from the query and store into variable
+            document.getElementById("regusernamebox").value = showUsername; //sets the value to the input of the user
+        }
+
+        if (params.has("stickEmail")) { //if has stickEmail
+            showEmail = params.get("stickEmail"); //get the info from the query and store into variable
+            document.getElementById("regemailbox").value = showEmail; //set the value to the input of the user
+        }
+
+        if (params.has("stickBirthday")) { //if has stickEmail
+            showBirthday = params.get("stickBirthday"); //get the info from the query and store into variable
+            document.getElementById("regbirthdaybox").value = showBirthday; //set the value to the input of the user
+        }
+    }
+</script>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Loyalty Page</title>
+    <link rel="stylesheet" href="loyalty.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" charset="utf-8"></script>
 </head>
+
 <body>
-    
+    <form name="updateForm" class="update-form" method="POST">
+        <div id="txtb">
+            <input type="text" id="regfirstnamebox">
+        </div>
+        
+        <div id="txtb">
+            <input type="text" id="reglastnamebox">
+        </div>
+        
+        <div id="txtb">
+            <input type="text" id="regusernamebox">
+        </div>
+        
+        <div id="txtb">
+            <input type="text" id="regemailbox">
+        </div>
+        
+        <div id="txtb">
+            <input type="text" id="regbirthdaybox">
+        </div>
+    </form>
 </body>
+
 </html>

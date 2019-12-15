@@ -1,1 +1,16 @@
-{"kobedait":{"firstname":"Kobe","lastname":"Dait","password":"password","email":"kobedait@hawaii.edu","birthday":"1998-9-15"},"itm352":{"firstname":"ITM","lastname":"352","password":"grader","email":"itm352@gmail.com","birthday":"2019-12-17"},"arose":{"firstname":"adrianne","lastname":"del rose","password":"password","email":"arose@gmaill.com","birthday":"2020-12-12"}}
+{
+    "kobedait": {
+        "firstname": "Kobe",
+        "lastname": "Dait",
+        "password": "password",
+        "email": "kobedait@hawaii.edu",
+        "birthday": "1998-9-15"
+    },
+    "itm352": {
+        "firstname": "ITM",
+        "lastname": "352",
+        "password": "grader",
+        "email": "itm352@gmail.com",
+        "birthday": "2019-12-17"
+    }
+}
