@@ -46,16 +46,20 @@ if (fs.existsSync(customerfile)) { // If user data exists
 
 // Taken from Lab 14
 // Post sourced from Shane Shimizu
-// Processes login page
+// Processes admin login page
 app.post("/admin_login", function (request, response) {
     var qString = queryString.stringify(request.query); // String query together
     // Assigns textbox inputs to values
+    inputUser = request.body.username;
     inputPass = request.body.password;
     the_username = request.body.username.toLowerCase(); // Assigns inputted username and is case-insensitive
 
     // Redirect to invoice page if true, else back to login page
     if (typeof admin_data[the_username] != 'undefined') { // Checks if username exists in user database
         if (admin_data[the_username].password == request.body.password) { // If password matches with username in user database
+            loginUserName = request.body.username; // Assigns the username into a variable
+            request.query.stickUsername = loginUserName; // Puts variable into query
+            qString = queryString.stringify(request.query); // Strings query together
             response.redirect("./manager.html?" + qString); // Send to invoice page with query   
         } else if (admin_data[the_username].password != request.body.password) { // Else if password does not match username in user database
             error = '<font color="red">Incorrect Password</font>'; // Assigns error to html to be displayed
@@ -75,9 +79,14 @@ app.post("/admin_login", function (request, response) {
     response.redirect("./admin_login.html?" + qString); // Send back to login page with qString
 });
 
+app.post("/database_form", function (request, response) {
+    // Reading customer data and making a session
+
+});
+
 // Taken from Lab 14
 // Post sourced from Shane Shimizu
-// Processes login page
+// Processes customer login page
 app.post("/customer_login", function (request, response) {
     console.log(request.body); // Checks in console
     var qString = queryString.stringify(request.query); // String query together
@@ -89,7 +98,7 @@ app.post("/customer_login", function (request, response) {
     // Redirect to invoice page if true, else back to login page
     if (typeof customer_data[the_username] != 'undefined') { // Checks if username exists in user database
         if (customer_data[the_username].password == request.body.password) { // If password matches with username in user database
-            // Assigns the username, email, and fullname into variables
+            // Assigns the username, email, and full name into variables
             loginFirstname = customer_data[the_username].firstname;
             loginLastname = customer_data[the_username].lastname;
             loginEmail = customer_data[the_username].email;
@@ -100,7 +109,7 @@ app.post("/customer_login", function (request, response) {
             request.query.stickEmail = loginEmail;
             request.query.stickUsername = loginUserName;
             qString = queryString.stringify(request.query); // Strings query together
-            response.redirect("./invoice_display.html?" + qString); // Send to invoice page with query   
+            response.redirect("./customer_loyalty.html?" + qString); // Send to invoice page with query   
         } else if (customer_data[the_username].password != request.body.password) { // Else if password does not match username in user database
             error = '<font color="red">Incorrect Password</font>'; // Assigns error to html to be displayed
             stickInput = inputUser; // Assigns inputted username to a sticky variable
@@ -119,11 +128,6 @@ app.post("/customer_login", function (request, response) {
     response.redirect("./customer_login.html?" + qString); // Send back to login page with qString
 });
 
-
-var today = moment().format('YYYY/MM/D hh:mm:ss SSS');
-console.log(today);
-
-
 // Taken from Lab 14
 // Post sourced from Shane Shimizu
 // Processes register page
@@ -138,8 +142,7 @@ app.post("/customer_register", function (request, response) {
     regInputEmail = request.body.email;
     regInputBirthday = request.body.birthday;
     email = request.body.email.toLowerCase();
-    var today = Date(Date.now);
-    today = today.toString();
+    var today = moment().format('YYYY/MM/D hh:mm:ss SSS');
 
     if (regInputFirstname.length > 30) { // If first name is over 30 characters
         firstnameErrorReg = '<font color="red">First Name must be 30 characters or less</font>'; // Assigns error to html to be displayed
@@ -296,7 +299,7 @@ app.post("/customer_register", function (request, response) {
         request.query.stickUsername = regInputUser;
         request.query.stickBirthday = regInputBirthday;
         qString = queryString.stringify(request.query); // String query together
-        response.redirect("./loyalty.html?" + qString); // Send to invoice page with query
+        response.redirect("./customer_loyalty.html?" + qString); // Send to invoice page with query
 
         console.log(request.body);
     }
@@ -317,11 +320,6 @@ app.post("/customer_register", function (request, response) {
 
     qString = queryString.stringify(request.query); // String query together
     response.redirect("./register.html?" + qString); // Send to register page with query
-});
-
-
-app.post("/database", function (request, response) {
-
 });
 
 app.use(express.static('./public'));
