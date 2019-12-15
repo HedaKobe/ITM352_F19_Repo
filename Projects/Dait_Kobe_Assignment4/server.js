@@ -80,8 +80,11 @@ app.post("/admin_login", function (request, response) {
 });
 
 app.post("/database_form", function (request, response) {
-    // Reading customer data and making a session
-
+    // Reading customer data then response.send(string)
+    // string = `stuff`;
+    console.log(customer_data);
+    
+    response.redirect('./manager.html');
 });
 
 // Taken from Lab 14
